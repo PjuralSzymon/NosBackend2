@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Edit {{name}}</title>
+</head>
+<body>
+    <div class="grid">
+        <div>
+            <img src="data:;base64,{{ picture }}"/>
+            <br>
+            <a href="/">Back</a>
+        </div>
+
+        <div class="edit-grid">
+            <div>
+                <h2>Resize</h2>
+            </div>
+            <div>
+                <h2>Crop</h2>
+            </div>
+            <div>
+                <h2>Rotate</h2>
+            </div>
+            <div>
+                <h2>Inversion</h2>
+            </div>
+            <div>
+                <h2>Contrast</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
