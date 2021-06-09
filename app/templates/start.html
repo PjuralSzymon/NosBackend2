@@ -1,83 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<header>
-    <title>Photo Manager</title> 
-    <script>
-        function upload_function() {
-            files = document.getElementById("upload_file").files
-                if (files.length == 1)
-                {
-                    sending_text = document.getElementById("sending")
-                    file = files[0]
-                    const uri = window.location.toString()
-                    var formData = new FormData();
-                    formData.append('file', file)
-                    sending_text.removeAttribute('hidden')
-
-                    fetch(uri, {
-                        method: 'POST',
-                        headers: {'Accept': '*/*' },
-                        body: formData
-                    })
-                    .then(r => {
-                        sending_text.setAttribute('hidden', 'true')
-
-                        if (r.status >= 400)
-                            alert("Failed to upload the song! status: " + r.status + ' check console for details')
-                        else
-                            console.log("Song uploaded!")
-                            window.location.reload(true)
-                        return r.text()
-                    })
-                    .then(t => console.log(t))
-                    .catch(e => {
-                        alert("Failed to upload the photo! error: " + e)
-                    })
+    <header>
+        <title>Photo Manager</title> 
+        <script>
+            function delete_photo(me){
+                id = me.parentNode.getAttribute("id")
+                console.log(id)
+                if(id){
+                    window.location = "/delete/" + id;
                 }
-                else
-                    alert("invalid number of songs, count:" + files.length)
-        }
-
-        function delete_photo(me){
-            id = me.parentNode.getAttribute("id")
-            console.log(id)
-            if(id){
-                window.location = "/delete/" + id;
             }
-        }
 
-        function edit_photo(me) {
-            id = me.parentNode.getAttribute("id")
-            console.log(id)
-            if (id) {
-                window.location = "/edit/" + id;
+            function edit_photo(me) {
+                id = me.parentNode.getAttribute("id")
+                console.log(id)
+                if (id) {
+                    window.location = "/edit/" + id;
+                }
             }
-        }
-    </script>
-</header>
-<head>
-    <link rel="icon" type="image/png" href= "{{ url_for('static', filename='favicon.ico') }}">
-</head>
-<body style="background-color: #f0f0f0;">
-    <div style="margin: 10px;">
-        <h2>Available photos:</h2>
-        <ul>
-            {%for photo in photos %}
-            <li>
-                <div id={{photo.id}} style="margin: 10px;">
-                    <button onclick="edit_photo(this)" >Edit</button>
-                    <button onclick="delete_photo(this)" >Delete</button> 
-                    <a href="/photo/{{photo.id}}">{{photo.id}}) {{ photo.name }}</a>
-                </div>
-            </li>
-        {% endfor %}
-        </ul>
-    
-        <h2>Upload new picture</h2>
-        <form action="http://localhost:5000/upload" enctype="multipart/form-data" method="POST">
-            <input type="file" name="picture" accept="image/png, image/jpg, image/jpeg"/>
-            <input type="submit" value="Upload a file"/>
-        </form>
-    </div>
-</body>
+        </script>
+    </header>
+    <head>
+        <link rel="icon" type="image/png" href= "{{ url_for('static', filename='favicon.ico') }}">
+    </head>
+    <body style="background-color: #f0f0f0;">
+        <h1>Photo Manager</h1>
+        <div style="margin: 10px;">
+            <h2>Available photos:</h2>
+            <ul>
+                {%for photo in photos %}
+                <li>
+                    <div id={{photo.id}} style="margin: 10px;">
+                        <button onclick="edit_photo(this)" >Edit</button>
+                        <button onclick="delete_photo(this)" >Delete</button> 
+                        <a href="/photo/{{photo.id}}" style="margin-left:10px;">{{photo.id}}) {{ photo.name }}</a>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        
+            <h2>Upload new picture</h2>
+            <form action="/upload" enctype="multipart/form-data" method="POST">
+                <input type="file" name="picture" accept="image/png, image/jpg, image/jpeg"/>
+                <input type="submit" value="Upload"/>
+            </form>
+        </div>
+    </body>
 </html>

@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Display {{name}}</title>
-</head>
-<body>
-    <img src="data:;base64,{{ picture }}"/>
-    <br>
-    <a href="/">Back</a>
-</body>
+    <header>
+        <script>
+
+        </script>
+    </header>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div style="margin: auto; text-align: center;">
+            <h1>{{image.name}}</h1>
+            <img src="data:;base64,{{ base }}"/>
+            <br><br>
+            <a href="/{{urlback}}" style="font-size: 22px; margin-top: 20px;">Back</a>
+        </div>
+    </body>
 </html>

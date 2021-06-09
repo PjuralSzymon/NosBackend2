@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Edit {{name}}</title>
+    <title>Edit {{image.name}}</title>
 </head>
 <body>
     <div class="grid">
-        <div>
-            <img src="data:;base64,{{ picture }}"/>
+        <div style="margin: auto; text-align: center;">
+            <h1>{{image.name}}</h1>
+            <img src="data:;base64,{{ image.render_data }}"/>
             <br>
-            <a href="/">Back</a>
+            <a href="/" style="font-size: 22px; margin-top: 20px;">Back</a>
         </div>
 
         <div class="edit-grid">
             <div>
                 <h2>Resize</h2>
+                <form action="/edit/{{image.id}}/resize" method="POST">
+                    <label>New width:</label>
+                    <input type="number" name="width" min="0" max="2000"/>
+                    <br><br>
+                    <label>New height:</label>
+                    <input type="number" name="height" min="0" max="2000"/>
+                    <br><br>
+                    <input type="submit" value="Display"/>
+                </form>
             </div>
             <div>
                 <h2>Crop</h2>
-            </div>
-            <div>
-                <h2>Rotate</h2>
+                <form action="/edit/{{image.id}}/crop" method="POST">
+                    <label style="margin-right: 5px;">Margin Left:</label>
+                    <input type="number" name="left" min="0" max="2000"/>
+                    <label style="margin-left: 15px;">Margin Top:</label>
+                    <input type="number" name="top" min="0" max="2000"/>
+                    <br><br>
+                    <label>Margin Right:</label>
+                    <input type="number" name="right" min="0" max="2000"/>
+                    <label style="margin-left: 10px;">Margin Bottom:</label>
+                    <input type="number" name="bottom" min="0" max="2000"/>
+                    <br><br>
+                    <input type="submit" value="Display"/>
+                </form>
             </div>
             <div>
                 <h2>Inversion</h2>
+                <form action="/edit/{{image.id}}/inverse" method="POST">
+                    <input type="submit" value="Display"/>
+                </form>
             </div>
             <div>
-                <h2>Contrast</h2>
+                <h2>Blur</h2>
+                <form action="/edit/{{image.id}}/blur" method="POST">
+                    <input type="submit" value="Display"/>
+                </form>
+            </div>
+            <div>
+                <h2>Sobel filter</h2>
+                <form action="/edit/{{image.id}}/sobel" method="POST">
+                    <input type="submit" value="Display"/>
+                </form>
             </div>
         </div>
     </div>
